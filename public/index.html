@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercise Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Exercise Tracker</h1>
+
+    <!-- Create User Form -->
+    <div class="card">
+      <h2>Create a New User</h2>
+      <form id="create-user-form">
+        <input type="text" id="username" placeholder="Username" required>
+        <button type="submit">Create User</button>
+      </form>
+      <div id="create-user-response"></div>
+    </div>
+
+    <!-- Add Exercise Form -->
+    <div class="card">
+      <h2>Add Exercise</h2>
+      <form id="add-exercise-form">
+        <select id="user-id" required>
+          <option value="">Select a user</option>
+        </select>
+        <input type="text" id="description" placeholder="Description" required>
+        <input type="number" id="duration" placeholder="Duration (minutes)" required>
+        <input type="date" id="date" placeholder="Date (YYYY-MM-DD)">
+        <button type="submit">Add Exercise</button>
+      </form>
+      <div id="add-exercise-response"></div>
+    </div>
+
+    <!-- Get Logs Form -->
+    <div class="card">
+      <h2>Get Exercise Logs</h2>
+      <form id="get-logs-form">
+        <select id="log-user-id" required>
+          <option value="">Select a user</option>
+        </select>
+        <input type="date" id="from" placeholder="From (YYYY-MM-DD)">
+        <input type="date" id="to" placeholder="To (YYYY-MM-DD)">
+        <input type="number" id="limit" placeholder="Limit">
+        <button type="submit">Get Logs</button>
+      </form>
+      <div id="logs-response"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
