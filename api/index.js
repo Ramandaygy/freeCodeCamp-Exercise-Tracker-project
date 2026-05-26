@@ -1,14 +1,14 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import 'dotenv/config';
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Schema User
+// Schema
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   exercises: [{
@@ -19,21 +19,24 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
-// Helper date
+// Helper
 function parseDate(dateString) {
   if (!dateString) return new Date();
   const parts = dateString.split('-');
-  if ( parts.length === 3 ) {
+  if (parts.length === 3) {
     return new Date(parts[0], parts[1]-1, parts[2]);
   }
   return new Date(dateString);
 }
 
-// Connect to MongoDB (panggil sekali di luar handler)
+// Koneksi DB (dengan cache untuk serverless)
 let cachedDb = null;
 async function connectToDatabase() {
   if (cachedDb) return cachedDb;
-  await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+  await mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   cachedDb = mongoose.connection;
   return cachedDb;
 }
@@ -116,12 +119,9 @@ app.get('/api/users/:_id/logs', async (req, res) => {
   }
 });
 
-// Untuk melayani file statis dari folder public
-import path from 'path';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// Sajikan file statis dari folder public
+const path = require('path');
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Export untuk Vercel
-export default app;
+// Untuk Vercel, kita export app (tanpa app.listen)
+module.exports = app;

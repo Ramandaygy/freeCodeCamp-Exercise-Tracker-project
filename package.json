@@ -1,7 +1,9 @@
 {
-  "type": "module",
+  "name": "exercise-tracker",
+  "version": "1.0.0",
+  "main": "api/index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node api/index.js"
   },
   "dependencies": {
     "express": "^4.18.2",
